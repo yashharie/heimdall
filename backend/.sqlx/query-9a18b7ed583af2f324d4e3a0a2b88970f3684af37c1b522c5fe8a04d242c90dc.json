@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        INSERT INTO retention_log\n            (metric_type, cutoff_date, rows_deleted, status, error_message)\n        VALUES\n            (?, ?, ?, ?, ?)\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "9a18b7ed583af2f324d4e3a0a2b88970f3684af37c1b522c5fe8a04d242c90dc"
+}

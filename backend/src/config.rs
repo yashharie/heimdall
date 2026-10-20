@@ -12,7 +12,8 @@ use anyhow::{Context, Result};
 #[derive(Debug, Clone)]
 pub struct Config {
     pub database: DatabaseConfig,
-    pub server: ServerConfig,
+    pub server:   ServerConfig,
+    pub tasks:    TasksConfig,
 }
 
 /// MySQL connection pool settings.
@@ -32,6 +33,23 @@ pub struct DatabaseConfig {
 pub struct ServerConfig {
     pub host: String,
     pub port: u16,
+}
+
+/// Configuration for all background tasks.
+#[derive(Debug, Clone)]
+pub struct TasksConfig {
+    pub retention: RetentionConfig,
+}
+
+/// Configuration for the data-retention background task.
+#[derive(Debug, Clone)]
+pub struct RetentionConfig {
+    /// How often to run the retention sweep, in seconds.
+    /// Default: 86400 (24 hours).
+    pub schedule_secs: u64,
+    /// Rows deleted per batch (each batch is one short DELETE statement).
+    /// Default: 500.
+    pub batch_size: u64,
 }
 
 impl ServerConfig {
@@ -75,6 +93,12 @@ impl Config {
             server: ServerConfig {
                 host: optional_str_var("SERVER_HOST", "127.0.0.1"),
                 port: optional_var("SERVER_PORT", 8080)?,
+            },
+            tasks: TasksConfig {
+                retention: RetentionConfig {
+                    schedule_secs: optional_var("RETENTION_SCHEDULE_SECS", 86_400)?,
+                    batch_size:    optional_var("RETENTION_BATCH_SIZE",    500)?,
+                },
             },
         })
     }

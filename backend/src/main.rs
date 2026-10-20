@@ -10,6 +10,7 @@
 //!   7. Bind and serve
 
 use anyhow::Result;
+use tokio_util::sync::CancellationToken;
 use tracing::info;
 
 mod config;
@@ -18,6 +19,7 @@ mod error;
 mod queries;
 mod routes;
 mod state;
+mod tasks;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -43,14 +45,21 @@ async fn main() -> Result<()> {
     db::run_migrations(&pool).await?;
 
     // ── 6. Build the router ───────────────────────────────────────────────────
-    let app_state = state::AppState::new(pool);
+    let app_state = state::AppState::new(pool.clone());
     let app = routes::router(app_state);
 
-    // ── 7. Bind and serve ─────────────────────────────────────────────────────
+    // ── 7. Spawn background tasks ─────────────────────────────────────────────
+    let cancel = CancellationToken::new();
+    let _task_set = tasks::spawn_all(pool, &cfg.tasks, cancel.clone());
+
+    // ── 8. Bind and serve (blocks until the server stops) ────────────────────
     let listener = tokio::net::TcpListener::bind(cfg.server.bind_addr()).await?;
     info!(addr = %listener.local_addr()?, "listening");
 
     axum::serve(listener, app).await?;
+
+    // Signal background tasks to stop cleanly.
+    cancel.cancel();
 
     Ok(())
 }

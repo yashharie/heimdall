@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "\n            DELETE FROM metrics\n            WHERE  metric_type = ?\n              AND  recorded_at < ?\n              AND  quality     != 'quarantine'\n            LIMIT  ?\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "5e5a541c18aee91bae2166620027bc9f91ca1232d247b30f2afc4545cb0b82ba"
+}

@@ -15,6 +15,7 @@ use tracing::info;
 mod config;
 mod db;
 mod error;
+mod queries;
 mod routes;
 mod state;
 

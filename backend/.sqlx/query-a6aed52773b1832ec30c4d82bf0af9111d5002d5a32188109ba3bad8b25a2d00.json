@@ -1,0 +1,184 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT\n            id,\n            computer_id,\n            office_id,\n            metric_type,\n            recorded_at,\n            agent_ts,\n            latency_ms,\n            jitter_ms,\n            packet_loss_pct,\n            download_mbps,\n            upload_mbps,\n            outage_duration_ms,\n            link_type,\n            link_speed_mbps,\n            asn,\n            isp_name,\n            quality\n        FROM metrics\n        WHERE computer_id = ?\n          AND metric_type = ?\n          AND quality     = 'ok'\n        ORDER BY recorded_at DESC\n        LIMIT 1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | PRIMARY_KEY | UNSIGNED | AUTO_INCREMENT",
+          "max_size": 20
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "computer_id",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | MULTIPLE_KEY | UNSIGNED | NO_DEFAULT_VALUE",
+          "max_size": 20
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "office_id",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | MULTIPLE_KEY | UNSIGNED | NO_DEFAULT_VALUE",
+          "max_size": 20
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "metric_type",
+        "type_info": {
+          "type": "String",
+          "flags": "NOT_NULL | MULTIPLE_KEY | ENUM | NO_DEFAULT_VALUE",
+          "max_size": 48
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "recorded_at",
+        "type_info": {
+          "type": "Datetime",
+          "flags": "NOT_NULL | BINARY | NO_DEFAULT_VALUE",
+          "max_size": 23
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "agent_ts",
+        "type_info": {
+          "type": "Datetime",
+          "flags": "BINARY",
+          "max_size": 23
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "latency_ms",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "jitter_ms",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "packet_loss_pct",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "download_mbps",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "upload_mbps",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 11,
+        "name": "outage_duration_ms",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "UNSIGNED",
+          "max_size": 20
+        }
+      },
+      {
+        "ordinal": 12,
+        "name": "link_type",
+        "type_info": {
+          "type": "String",
+          "flags": "ENUM",
+          "max_size": 32
+        }
+      },
+      {
+        "ordinal": 13,
+        "name": "link_speed_mbps",
+        "type_info": {
+          "type": "Float",
+          "flags": "",
+          "max_size": 12
+        }
+      },
+      {
+        "ordinal": 14,
+        "name": "asn",
+        "type_info": {
+          "type": "Long",
+          "flags": "UNSIGNED",
+          "max_size": 10
+        }
+      },
+      {
+        "ordinal": 15,
+        "name": "isp_name",
+        "type_info": {
+          "type": "VarString",
+          "flags": "",
+          "max_size": 400
+        }
+      },
+      {
+        "ordinal": 16,
+        "name": "quality",
+        "type_info": {
+          "type": "String",
+          "flags": "NOT_NULL | MULTIPLE_KEY | ENUM",
+          "max_size": 40
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "a6aed52773b1832ec30c4d82bf0af9111d5002d5a32188109ba3bad8b25a2d00"
+}

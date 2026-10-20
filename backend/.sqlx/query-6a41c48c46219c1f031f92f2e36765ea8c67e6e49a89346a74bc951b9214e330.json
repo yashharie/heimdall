@@ -1,0 +1,34 @@
+{
+  "db_name": "MySQL",
+  "query": "\n        SELECT\n            computer_id,\n            MAX(recorded_at) AS \"last_heartbeat_at: NaiveDateTime\"\n        FROM metrics\n        WHERE office_id   = ?\n          AND metric_type = 'heartbeat'\n          AND quality     = 'ok'\n        GROUP BY computer_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "computer_id",
+        "type_info": {
+          "type": "LongLong",
+          "flags": "NOT_NULL | MULTIPLE_KEY | UNSIGNED | NO_DEFAULT_VALUE",
+          "max_size": 20
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "last_heartbeat_at: NaiveDateTime",
+        "type_info": {
+          "type": "Datetime",
+          "flags": "BINARY",
+          "max_size": 23
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true
+    ]
+  },
+  "hash": "6a41c48c46219c1f031f92f2e36765ea8c67e6e49a89346a74bc951b9214e330"
+}

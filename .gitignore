@@ -1,1 +1,10 @@
-.DS_Store
+
+# Rust build output
+/target/
+/backend/target/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+/backend/.env

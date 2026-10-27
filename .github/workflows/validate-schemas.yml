@@ -1,0 +1,32 @@
+name: Validate protocol schemas
+
+on:
+  push:
+    paths:
+      - "docs/schemas/**"
+  pull_request:
+    paths:
+      - "docs/schemas/**"
+
+jobs:
+  validate:
+    name: Validate JSON schemas against examples
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: docs/schemas/package.json
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: docs/schemas
+
+      - name: Validate examples against schemas
+        run: npm run validate
+        working-directory: docs/schemas
